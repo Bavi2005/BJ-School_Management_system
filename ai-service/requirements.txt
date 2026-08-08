@@ -1,0 +1,12 @@
+fastapi
+uvicorn[standard]
+pydantic
+pydantic-settings
+numpy
+scikit-learn
+pandas
+textblob
+nltk
+jina>=3.30.0
+httpx
+python-dotenv

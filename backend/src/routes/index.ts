@@ -1,0 +1,48 @@
+import { Router } from 'express';
+import authRoutes from './auth.routes';
+import userRoutes from './user.routes';
+import eventRoutes from './event.routes';
+import calendarRoutes from './calendar.routes';
+import aiRoutes from './ai.routes';
+import dashboardRoutes from './dashboard.routes';
+import attendanceRoutes from './attendance.routes';
+import gradeRoutes from './grade.routes';
+import notificationRoutes from './notification.routes';
+import academicRoutes from './academic.routes';
+import feeRoutes from './fee.routes';
+import healthRoutes from './health.routes';
+import timetableRoutes from './timetable.routes';
+import assignmentRoutes from './assignment.routes';
+import libraryRoutes from './library.routes';
+import transportRoutes from './transport.routes';
+import hrRoutes from './hr.routes';
+import admissionRoutes from './admission.routes';
+import examRoutes from './exam.routes';
+import bookingRoutes from './booking.routes';
+import permissionRoutes from './permission.routes';
+
+const router = Router();
+
+router.use('/auth', authRoutes);
+router.use('/users', userRoutes);
+router.use('/events', eventRoutes);
+router.use('/calendar', calendarRoutes);
+router.use('/ai', aiRoutes);
+router.use('/dashboard', dashboardRoutes);
+router.use('/attendance', attendanceRoutes);
+router.use('/grades', gradeRoutes);
+router.use('/notifications', notificationRoutes);
+router.use('/academic', academicRoutes);
+router.use('/fees', feeRoutes);
+router.use('/health-records', healthRoutes);
+router.use('/timetable', timetableRoutes);
+router.use('/assignments', assignmentRoutes);
+router.use('/library', libraryRoutes);
+router.use('/transport', transportRoutes);
+router.use('/hr', hrRoutes);
+router.use('/admissions', admissionRoutes);
+router.use('/exams', examRoutes);
+router.use('/bookings', bookingRoutes);
+router.use('/permissions', permissionRoutes);
+
+export default router;

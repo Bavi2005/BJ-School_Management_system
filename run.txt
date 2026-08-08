@@ -1,0 +1,172 @@
+================================================================================
+ EduCore Nexus - School Management System
+ FULL SETUP + RUN (for a fresh laptop, copy-paste block by block)
+================================================================================
+
+WHAT YOU NEED:
+  - Node.js >= 20 (https://nodejs.org)
+  - Python >= 3.11 (https://python.org)
+  - Docker + Docker Compose (for PostgreSQL + Redis) OR a local install
+  - Internet access (first run downloads dependencies)
+
+PORTS USED:
+   - Frontend (Next.js) ....... http://localhost:3100   (NOT 3000 - kept free)
+   - Backend API + Swagger .... http://localhost:4000   (/api-docs)
+   - AI Service + docs ........ http://localhost:8000   (/docs)
+   - Android APK .............. EduCore-Nexus.apk (project root)
+
+--------------------------------------------------------------------------------
+ STEP 1 - Start PostgreSQL and Redis (Docker)
+--------------------------------------------------------------------------------
+  docker compose up -d postgres redis
+
+  # Wait ~10s, then verify:
+  docker ps
+
+  # If you prefer local Postgres instead of Docker, make sure port 5432 is
+  # running and set DATABASE_URL in backend/.env accordingly.
+
+--------------------------------------------------------------------------------
+ STEP 2 - Install dependencies (from the project ROOT folder)
+--------------------------------------------------------------------------------
+  npm install
+
+  # Build the shared package (required by backend + frontend)
+  npm run build --workspace=@school-mgmt/shared
+
+  # AI service Python dependencies (virtualenv is created automatically)
+  cd ai-service
+  python3 -m venv .venv
+  .venv/bin/pip install "pyyaml>=6.0.1"
+  .venv/bin/pip install -r requirements.txt
+  cd ..
+
+--------------------------------------------------------------------------------
+ STEP 3 - Configure environment files (only needed the FIRST time)
+--------------------------------------------------------------------------------
+  cp backend/.env.example backend/.env
+  cp ai-service/.env.example ai-service/.env     # if it exists; else create it
+  cp frontend/.env.example frontend/.env.local   # if it exists; else create it
+
+  IMPORTANT - create these files with this content if they are missing:
+
+  frontend/.env.local:
+      NEXT_PUBLIC_API_URL=http://localhost:4000/api/v1
+      NEXT_PUBLIC_SOCKET_URL=http://localhost:4000
+
+  ai-service/.env:
+      HOST=0.0.0.0
+      PORT=8000
+      AI_API_KEY=dev-key-change-me
+      BACKEND_URL=http://localhost:4000
+
+  backend/.env: make sure these values are set
+      PORT=4000
+      DATABASE_URL="postgresql://postgres:postgres@localhost:5432/school_mgmt?schema=public"
+      FRONTEND_URL=http://localhost:3100
+      AI_SERVICE_URL=http://localhost:8000
+      AI_API_KEY=dev-key-change-me
+
+  (All secrets above are dev defaults - the app runs fine with them.)
+
+--------------------------------------------------------------------------------
+ STEP 4 - Create database + push schema + seed demo data
+--------------------------------------------------------------------------------
+  npm run db:generate
+  npm run db:push
+  npm run db:seed
+
+  Expected output ends with: "🎉 Seeding complete!"
+
+--------------------------------------------------------------------------------
+ STEP 5 - RUN EVERYTHING (3 terminal tabs, or one command)
+--------------------------------------------------------------------------------
+  Terminal 1 - Backend (port 4000):
+      cd backend
+      npm run dev
+
+  Terminal 2 - AI service (port 8000):
+      cd ai-service
+      .venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+  Terminal 3 - Frontend (port 3100):
+      cd frontend
+      npm run dev
+
+  ...OR run all three from the root with one command:
+      npm run dev
+
+  NOTE: npm run dev starts the frontend on port 3100 (already configured).
+
+--------------------------------------------------------------------------------
+ STEP 6 - Verify everything is running
+--------------------------------------------------------------------------------
+  http://localhost:3100          -> Frontend login page
+  http://localhost:4000/health   -> {"status":"ok",...}
+  http://localhost:4000/api-docs -> Swagger API docs
+  http://localhost:8000/health   -> {"status":"ok",...}
+  http://localhost:8000/docs     -> AI service docs
+
+--------------------------------------------------------------------------------
+ DEMO ACCOUNTS (from seed)
+--------------------------------------------------------------------------------
+  Admin   -> admin@educore.dev    / Admin@123
+  Teacher -> teacher@educore.dev  / Admin@123
+  Student -> student@educore.dev  / Admin@123
+  Parent  -> parent@educore.dev   / Admin@123
+
+--------------------------------------------------------------------------------
+ TROUBLESHOOTING
+--------------------------------------------------------------------------------
+  - "port already in use"  -> kill the old process:
+      lsof -i :3100 -i :4000 -i :8000 | kill the PIDs listed
+  - "Address already in use" for 5432/6379 -> docker compose down, then up again
+  - AI endpoints return 401 -> make sure AI_API_KEY matches in backend/.env
+      and ai-service/.env
+  - Frontend shows blank/API errors -> check frontend/.env.local URLs point
+      at http://localhost:4000
+  - Reset everything (drops data):
+      docker compose down -v && npm run db:push && npm run db:seed
+
+--------------------------------------------------------------------------------
+  BUILDING THE ANDROID APK (requires Internet once, ~5-10 min)
+--------------------------------------------------------------------------------
+  Prereqs: JDK 21 + Android SDK + Node.js >= 22.
+
+      # 1. Build the static web export pointing at THIS machine's LAN IP
+      #    (change 172.20.96.52 to your laptop's IP so your phone can reach it)
+      cd frontend
+      APK_EXPORT=true NEXT_PUBLIC_API_URL=http://172.20.96.52:4000/api/v1 \
+        npm run build
+
+      # 2. Refresh the Capacitor project with the new web build
+      npx cap copy android
+
+      # 3. Build the debug APK
+      cd android
+      ./gradlew assembleDebug
+
+  Output: frontend/android/app/build/outputs/apk/debug/app-debug.apk
+  Pre-built copy: EduCore-Nexus.apk at the project root.
+
+  RELEASE (signed) build:
+      cd frontend/android
+      ./gradlew assembleRelease        # uses keystore.properties signing config
+  Output: app/build/outputs/apk/release/app-release.apk
+  Pre-built copy: EduCore-Nexus-release.apk at the project root.
+
+  Signing setup (done once, already configured):
+      keystore:  android/app/educore-release.jks  (alias: educore)
+      config:    android/keystore.properties       (password stored in
+                  android/app/keystore.password)
+  KEEP THE KEYSTORE + PASSWORD SAFE - without them you cannot publish
+  UPDATES to the Play Store under the same identity. Rebuilding a new
+  keystore is fine for sideloading, but existing installs won't update.
+
+  Install on your phone (same Wi-Fi as the laptop):
+      adb install EduCore-Nexus.apk
+  or copy the APK to your phone and open it to install
+  (allow "install from unknown sources").
+
+  Laptop must be running the backend on 0.0.0.0:4000 (already the default) and
+  reachable at the LAN IP baked into the APK.

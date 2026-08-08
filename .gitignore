@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+
+# Environment
+.env
+.env.local
+.env.production
+.env.backend.backup
+
+# Prisma
+backend/prisma/migrations/dev.db-journal
+
+# Uploads / storage
+uploads/
+
+# Logs
+logs/
+*.log
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+
+# Next.js
+.next/
+next-env.d.ts
+
+# Legacy PHP files (converted project)
+*.php

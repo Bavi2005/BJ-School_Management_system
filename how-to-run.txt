@@ -1,0 +1,164 @@
+================================================================================
+ EduCore Nexus - School Management System
+ COPY-PASTE SETUP + RUN GUIDE
+ Just copy each block below into your terminal, one at a time.
+================================================================================
+
+WHAT YOU NEED
+  - Node.js >= 20  (https://nodejs.org)
+  - Python >= 3.11 (https://python.org)
+  - Docker + Docker Compose  (for PostgreSQL + Redis)
+  - Internet (first run only - downloads dependencies)
+
+WHAT YOU GET (everything inside)
+  - Dashboard (role-aware stats + charts)
+  - AI Assistant (chatbot, performance prediction, attendance-risk,
+    auto-grading, smart timetable scheduling, anomaly detection)
+  - Announcements / Notifications (real-time via Socket.io)
+  - Academics: Classes, Students (SIS), Gradebook, Attendance,
+    Timetable, Assignments (LMS), Exams, Admissions
+  - Operations: Room & Hall Booking, Calendar, Events, Health Center,
+    Fees & Billing, Library, Transport, HR & Payroll
+  - Settings: Users & Staff, Roles & Permissions
+  - Google Calendar integration + Android APK build
+
+PORTS USED
+  - Frontend (Next.js) ........ http://localhost:3100   (NOT 3000)
+  - Backend API + Swagger ..... http://localhost:4000   (/api-docs)
+  - AI Service + docs ......... http://localhost:8000   (/docs)
+
+--------------------------------------------------------------------------------
+ STEP 1 - Start PostgreSQL + Redis (Docker)
+--------------------------------------------------------------------------------
+  docker compose up -d postgres redis
+
+  # Wait ~10 seconds, then verify:
+  docker ps
+
+--------------------------------------------------------------------------------
+ STEP 2 - Install dependencies (run from project ROOT)
+--------------------------------------------------------------------------------
+  npm install
+
+  # Build the shared package (needed by backend + frontend)
+  npm run build --workspace=@school-mgmt/shared
+
+  # AI service Python dependencies
+  cd ai-service
+  python3 -m venv .venv
+  .venv/bin/pip install "pyyaml>=6.0.1"
+  .venv/bin/pip install -r requirements.txt
+  cd ..
+
+--------------------------------------------------------------------------------
+ STEP 3 - Configure environment files (FIRST TIME ONLY)
+--------------------------------------------------------------------------------
+  cp backend/.env.example backend/.env
+  cp ai-service/.env.example ai-service/.env
+  cp frontend/.env.example frontend/.env.local
+
+  # If the examples don't exist, create the files with this content:
+
+  # frontend/.env.local
+  NEXT_PUBLIC_API_URL=http://localhost:4000/api/v1
+  NEXT_PUBLIC_SOCKET_URL=http://localhost:4000
+
+  # ai-service/.env
+  HOST=0.0.0.0
+  PORT=8000
+  AI_API_KEY=dev-key-change-me
+  BACKEND_URL=http://localhost:4000
+
+  # backend/.env (dev defaults are fine)
+  PORT=4000
+  DATABASE_URL="postgresql://postgres:postgres@localhost:5432/school_mgmt?schema=public"
+  FRONTEND_URL=http://localhost:3100
+  AI_SERVICE_URL=http://localhost:8000
+  AI_API_KEY=dev-key-change-me
+
+--------------------------------------------------------------------------------
+ STEP 4 - Create database + schema + seed demo data
+--------------------------------------------------------------------------------
+  npm run db:generate
+  npm run db:push
+  npm run db:seed
+
+  # Expected final output: "Seeding complete!"
+
+--------------------------------------------------------------------------------
+ STEP 5 - RUN EVERYTHING (one command from project ROOT)
+--------------------------------------------------------------------------------
+  npm run dev
+
+  # ...or run each service in its own terminal:
+  # Terminal 1 - Backend
+  cd backend && npm run dev
+  # Terminal 2 - AI service
+  cd ai-service && .venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000
+  # Terminal 3 - Frontend
+  cd frontend && npm run dev
+
+--------------------------------------------------------------------------------
+ STEP 6 - OPEN AND EXPLORE
+--------------------------------------------------------------------------------
+  Frontend login ....... http://localhost:3100
+  API docs (Swagger) .. http://localhost:4000/api-docs
+  API health .......... http://localhost:4000/health
+  AI service docs ..... http://localhost:8000/docs
+  AI service health ... http://localhost:8000/health
+
+  DEMO ACCOUNTS (password for all: Admin@123)
+    admin@educore.dev    - Principal / Super Admin (sees everything)
+    teacher1@educore.dev - Teacher
+    student1@educore.dev - Student
+    parent1@educore.dev  - Parent
+
+  AFTER LOGIN - what to click (all in the left sidebar):
+    Dashboard     -> stats cards + charts
+    AI Assistant  -> ask questions, run predictions, auto-grade
+    Announcements -> view/send announcements (real-time)
+    Classes       -> manage classes, teachers, subjects
+    Students      -> student records (SIS)
+    Gradebook     -> grades + transcripts
+    Attendance    -> mark/track attendance + stats
+    Timetable     -> schedules
+    Assignments   -> LMS + submissions
+    Exams         -> exams + results
+    Admissions    -> student applications
+    Room & Hall Booking -> book rooms/halls
+    Calendar      -> events calendar
+    Events        -> school events + registration
+    Health Center -> health records
+    Fees & Billing-> invoices + payments
+    Library       -> books + loans
+    Transport     -> buses + routes
+    HR & Payroll  -> staff, leaves, payroll
+    Users & Staff -> manage users
+    Roles & Permissions -> RBAC
+
+--------------------------------------------------------------------------------
+ TROUBLESHOOTING
+--------------------------------------------------------------------------------
+  - "port already in use" -> kill the old process:
+      lsof -i :3100 -i :4000 -i :8000
+
+  - AI endpoints return 401 -> AI_API_KEY must MATCH in both
+      backend/.env and ai-service/.env
+
+  - Frontend shows API errors -> check frontend/.env.local URLs
+      point at http://localhost:4000
+
+  - Ports 5432/6379 busy -> docker compose down, then up again
+
+  - Reset everything (drops data):
+      docker compose down -v && npm run db:push && npm run db:seed
+
+  - Full stack via Docker instead of local:
+      docker compose up -d --build
+
+--------------------------------------------------------------------------------
+ ANDROID APK (optional)
+--------------------------------------------------------------------------------
+  See run.txt for the full signed/debug APK build steps.
+
+================================================================================
