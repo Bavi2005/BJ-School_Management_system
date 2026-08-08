@@ -17,6 +17,10 @@ __pycache__/
 .env.production
 .env.backend.backup
 
+# Python virtualenvs
+.venv/
+venv/
+
 # Prisma
 backend/prisma/migrations/dev.db-journal
 
@@ -41,6 +45,9 @@ coverage/
 # Next.js
 .next/
 next-env.d.ts
+
+# TypeScript incremental build info
+*.tsbuildinfo
 
 # Legacy PHP files (converted project)
 *.php
