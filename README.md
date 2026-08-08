@@ -1,31 +1,22 @@
 # 🎓 EduCore Nexus — AI-Powered School Management System
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/8350a541-06ee-4279-8bb5-098882b78cfc" alt="Dashboard" width="100%" />
+</p>
+
 A modern, full-stack school management platform rebuilt from a legacy PHP system into a production-grade monorepo with **AI-powered insights**, **Google Calendar integration**, real-time notifications, and role-based dashboards for **admins, teachers, students, and parents**.
 
 ---
 
 ## 📸 Screenshots
 
-> Upload your screenshots to the repo root with these exact file names and they
-> will show up here automatically. All the screenshots you need to take:
+| Login | Main Page / Dashboard |
+|-------|-----------------------|
+| ![Login](https://github.com/user-attachments/assets/984f2e4f-c74c-4d4f-85ac-d497a2a3809d) | ![Main Page / Dashboard](https://github.com/user-attachments/assets/d209844b-021c-4ce3-b5bc-d3e3adb2f373) |
 
-| | |
-|---|---|
-| ![](screenshot(login).png) | ![](screenshot(main-page).png) |
-| **Login** | **Main Page / Dashboard** |
-
-| | |
-|---|---|
-| ![](screenshot(ai-assistant).png) | ![](screenshot(academics).png) |
-| **AI Assistant** | **Academics** |
-
-| | |
-|---|---|
-| ![](screenshot(operations).png) | ![](screenshot(settings).png) |
-| **Operations** | **Settings** |
-
-> 💡 Tip: screenshot the pages as an admin user so the dashboard has real data.
-> 1280×800 or wider, PNG or JPG.
+| AI Assistant | Academics |
+|--------------|-----------|
+| ![AI Assistant](https://github.com/user-attachments/assets/d700dc1e-f2d9-4346-bfd6-b9dadedeb819) | ![Academics](https://github.com/user-attachments/assets/1685732e-e4cc-48be-87ce-f1873eb0fa29) |
 
 ---
 
