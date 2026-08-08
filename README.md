@@ -1,4 +1,4 @@
-# 🎓 EduCore Nexus — AI-Powered School Management System
+# 🎓 BJ-SCHOOL_MANAGEMENT_SYSTEM — AI-Powered School Management System
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/8350a541-06ee-4279-8bb5-098882b78cfc" alt="Dashboard" width="100%" />
