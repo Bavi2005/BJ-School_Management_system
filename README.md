@@ -1,4 +1,4 @@
-# 🎓 EduCore Nexus — AI-Powered School Management System
+<img width="1917" height="928" alt="image" src="https://github.com/user-attachments/assets/8350a541-06ee-4279-8bb5-098882b78cfc" /><img width="1917" height="927" alt="image" src="https://github.com/user-attachments/assets/1f7c3fa4-0b61-4ca9-98e4-b4c55bd37005" /><img width="1917" height="927" alt="image" src="https://github.com/user-attachments/assets/ef118e51-ffd9-4848-82db-e306339a4130" /><img width="1467" height="831" alt="image" src="https://github.com/user-attachments/assets/8d940866-512e-4936-8322-6848f2ff8421" /># 🎓 EduCore Nexus — AI-Powered School Management System
 
 A modern, full-stack school management platform rebuilt from a legacy PHP system into a production-grade monorepo with **AI-powered insights**, **Google Calendar integration**, real-time notifications, and role-based dashboards for **admins, teachers, students, and parents**.
 
@@ -6,26 +6,19 @@ A modern, full-stack school management platform rebuilt from a legacy PHP system
 
 ## 📸 Screenshots
 
-> Upload your screenshots to the repo root with these exact file names and they
-> will show up here automatically. All the screenshots you need to take:
-
 | | |
 |---|---|
-| ![](screenshot(login).png) | ![](screenshot(main-page).png) |
+| ![](<img width="1467" height="831" alt="image" src="https://github.com/user-attachments/assets/984f2e4f-c74c-4d4f-85ac-d497a2a3809d" />
+) | ![](<img width="1917" height="927" alt="image" src="https://github.com/user-attachments/assets/d209844b-021c-4ce3-b5bc-d3e3adb2f373" />
+) |
 | **Login** | **Main Page / Dashboard** |
 
 | | |
 |---|---|
-| ![](screenshot(ai-assistant).png) | ![](screenshot(academics).png) |
+| ![](<img width="1917" height="927" alt="image" src="https://github.com/user-attachments/assets/d700dc1e-f2d9-4346-bfd6-b9dadedeb819" />
+) | ![](<img width="1917" height="928" alt="image" src="https://github.com/user-attachments/assets/1685732e-e4cc-48be-87ce-f1873eb0fa29" />
+) |
 | **AI Assistant** | **Academics** |
-
-| | |
-|---|---|
-| ![](screenshot(operations).png) | ![](screenshot(settings).png) |
-| **Operations** | **Settings** |
-
-> 💡 Tip: screenshot the pages as an admin user so the dashboard has real data.
-> 1280×800 or wider, PNG or JPG.
 
 ---
 
