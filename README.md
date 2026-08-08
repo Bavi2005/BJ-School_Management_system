@@ -1,4 +1,6 @@
-<img width="1917" height="928" alt="image" src="https://github.com/user-attachments/assets/8350a541-06ee-4279-8bb5-098882b78cfc" /><img width="1917" height="927" alt="image" src="https://github.com/user-attachments/assets/1f7c3fa4-0b61-4ca9-98e4-b4c55bd37005" /><img width="1917" height="927" alt="image" src="https://github.com/user-attachments/assets/ef118e51-ffd9-4848-82db-e306339a4130" /><img width="1467" height="831" alt="image" src="https://github.com/user-attachments/assets/8d940866-512e-4936-8322-6848f2ff8421" /># 🎓 EduCore Nexus — AI-Powered School Management System
+# 🎓 BJ-SCHOOL_MANAGEMENT_SYSTEM — AI-Powered School Management System
+
+<img width="1917" height="928" alt="image" src="https://github.com/user-attachments/assets/8350a541-06ee-4279-8bb5-098882b78cfc" /><img width="1917" height="927" alt="image" src="https://github.com/user-attachments/assets/1f7c3fa4-0b61-4ca9-98e4-b4c55bd37005" /><img width="1917" height="927" alt="image" src="https://github.com/user-attachments/assets/ef118e51-ffd9-4848-82db-e306339a4130" /><img width="1467" height="831" alt="image" src="https://github.com/user-attachments/assets/8d940866-512e-4936-8322-6848f2ff8421" />
 
 A modern, full-stack school management platform rebuilt from a legacy PHP system into a production-grade monorepo with **AI-powered insights**, **Google Calendar integration**, real-time notifications, and role-based dashboards for **admins, teachers, students, and parents**.
 
